@@ -1,0 +1,346 @@
+/******************************************************************************/
+*																	UI PAGE																			 *
+/******************************************************************************/
+Name - service_desk_kiosk
+Application - Global
+Categroy - General
+Description - [none]
+
+/********/
+  HTML
+/********/
+<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+<style type="text/css">
+	body{
+		background-image: url("hdc_helper.png");
+		font-family:Arial, Verdana, Helvetica, sans-serif;
+		font-size:10px;
+	}
+	p, h1, form, button{ border:0; margin:0; padding:0; }
+.spacer{clear:both; height:1px;}
+/* ----------- My Form ----------- */
+.myform{
+	margin:100px auto;
+	width:600px;
+	padding:30px;
+}
+/* ----------- stylized ----------- */
+#stylized{
+	font-size: 18px;
+	border:solid 2px #231f20;
+	color:#231f20;
+	background:#d3d7cf;
+	border-radius: 20px;
+}
+	#stylized #help-desk {
+		color: #500000 
+		font-size:18px;
+		position: relative;
+		left: 70px;
+		bottom: 53px;
+	}
+	#stylized #chknetid{
+		margin-top: 10px;
+    width: 80px;
+    margin-left: 0px;
+		/* Double-sized Checkboxes */
+  	-ms-transform: scale(2); /* IE */
+  	-moz-transform: scale(2); /* FF */
+  	-webkit-transform: scale(2); /* Safari and Chrome */
+  	-o-transform: scale(2); /* Opera */
+	}
+	#stylized h1{
+		font-size:14px;
+		font-weight:bold;
+		margin-bottom:10px;
+	}
+	#stylized p{
+	/*font-size:12px;*/
+	/*color:#fefefe;*/
+		margin-bottom:20px;
+		<!--border-bottom:solid 1px #b7ddf2;-->
+		padding-bottom:10px;
+	}
+	#stylized label{
+		display:block;
+	/*font-weight:bold;*/
+		text-align:right;
+	/*font-size:14px;*/
+		width:175px;
+		float:left;
+		padding-top:7px;
+	}
+	#stylized input{
+		float:left;
+	/*font-size:10px;*/
+		padding:4px 2px;
+		border:solid 1px #f2af00;
+		width:200px;
+		margin:2px 0 20px 10px;
+	}
+	<!--
+	#stylized #norecord{
+		display:none;
+	}
+	#stylized #record{
+		display:block;
+	}-->
+	#stylized #service{
+		margin: 5px 0 20px 10px;
+	}
+	#stylized button{
+		position: relative;
+		left: 50%;
+		top: 17px;
+	/*bottom: 20px;*/
+  /* bring your own prefixes */
+  	transform: translate(-50%, -50%);
+		clear:both;
+	/*margin-left:170px;*/
+		width:125px;
+		height:31px;
+		background:#f2af00;
+		/*url(img/button.png) norepeat;*/
+		text-align:center;
+		/*line-height:31px;*/
+		color:#ffffff;
+		font-size:14px;
+		font-weight:bold;
+	}
+	
+	br {
+   	 display: block;
+	/*margin: 1px 0;*/
+		content: " ";
+		line-height: 1px;
+	}
+</style>
+<script>
+	var toggleVisibility = function(element) {
+    if(element.style.display=='block'){
+    	element.style.display='none';
+    } else {
+    	element.style.display='block';
+    }
+	};
+</script>
+	 
+<div id="stylized" class="myform">
+	<g:ui_form id="form" name="form">
+	<img src="TAMU_logo_box.png" width="60" height="57"/>
+	<div id="help-desk">
+		<strong>Help Desk Central</strong>
+		<br></br>
+		<small>Texas A&amp;M
+			<strong> Information Technology</strong>
+		</small>
+	</div>
+	<p>Please sign in and you will be helped shortly.</p>
+	<hr/>
+	<label>Do you have a NetID? : </label>
+	<!--<g:ui_checkbox name="chknetid" value="${sysparm_chknetid}" />-->
+	<input type="checkbox" name="chknetid" checked='checked' id="chknetid" onclick="toggleVisibility(norecord);"/>
+	<div class="spacer"></div>
+
+	
+	<div id="record">	
+		<label>NetID :</label>
+		<input type="text" name="netid" id="netid" />		
+	</div>
+	
+	<div id="norecord">
+		<label>First Name :</label>
+		<input type="text" name="fname" id="fname"/>
+
+		<label>Last Name :</label>
+		<input type="text" name="lname" id="lname"/>
+	</div>
+	
+	<label>Service :</label>
+	<select name="service" id="service">
+		<option value="Software">Software</option>
+		<option value="Password Reset">Password reset</option>
+		<option value="Bootcamp/OS Install">Bootcam/OS Install</option>
+		<option value="Engineering/BYOD">Engineering/BYOD</option>
+		<option value="Wireless">Wireless</option>
+		<option value="Dorm Networking">Dorm Networking</option>
+		<option value="Other Networking">Other Networking</option>
+		<option value="Virus/Malware">Virus/Malware</option>
+		<option value="Computer Bootup Issues">Computer Bootup Issues</option>
+		<option value="Slow or Unresponsive Computer">Slow or Unresponsive Computer</option>
+		<option value="Hardware Issue">Hardware Issue</option>
+		<option value="Cable TV">Cable TV</option>
+		<option value="Philo TV">Philo TV</option>
+		<option value="eCampus/Classwork">eCampus/Classwork</option>
+	</select>
+	
+	<button type="submit">Sign-in</button>
+	<div class="spacer"></div>
+	</g:ui_form>
+</div>
+</j:jelly>
+
+
+
+/**************/
+ CLIENT SCRIPT
+/**************/
+[none]
+
+
+/*************/
+  PROCESSING
+/*************/
+var contact = new GlideRecord("new_call");
+contact.caller = fname + ' ' + lname;
+//contact.company = '7e77fdf46f6c6100cfd1247cbb3ee46d';
+contact.company = currentUserCompany();
+//contact.email = u_caller_email;
+contact.contact_type = 'Walk-in';
+contact.short_description = service;
+contact.description = 'Description: ' + service;
+
+contact.insert();
+
+
+
+
+
+
+
+/******************************************************************************/
+													    CUSTOM APPLICATION
+/******************************************************************************/
+/*****************************/
+Business Rule - Submit to call
+Updated by - Chris McClendon
+/*****************************/
+function onBefore(current, previous) {
+	var call = new GlideRecord("new_call");
+	//var user = new GlideRecord("sys_user");
+	//var service = new GlideRecord("cmdb_ci_service");
+	
+	////var classification = new GlideRecord("u_category");
+	////service.get("name", "HDC Walk-in Services (TAMU)");
+	////classification.get("name", "Computer Services - Status/Inquiry (Walk-In)");
+	////var problem = selectedProblem();
+	
+	//var customer;
+	
+	////call.u_service = "436845336fc0f1000798122cbb3ee402"; //Service = HDC Walk-in Services (TAMU)
+	////call.u_category = "a6c654be6fc2820049a54e8f1e3ee4a6"; //Classification = Computer Services - Status/Inquiry (Walk-In)
+	////call.contact_type = "Walk-in"; //Walk-in
+	
+	if (current.u_kiosk_has_user) {
+		customer = current.u_kiosk_uin_netid_name;
+		//user.get("user_name", customer);
+		call.description = customer;
+		call.short_description = current.u_kiosk_problem;
+		//call.u_service = service.name.sys_id.toString();
+		//call.u_category = classification.name.sys_id.toString();
+	} else {
+		user.get('user_name', 'no_record');
+		//var norecordID = user.sys_id.toString();
+		call.caller = user.sys_id.toString();
+		customer = current.u_kiosk_first_name + " " + current.u_kiosk_last_name;
+		call.u_caller_name = customer;
+		//call.description = customer;
+		call.short_description = current.u_kiosk_problem;
+		//call.u_service = service.name.sys_id.toString();
+		//call.u_category = classification.name.sys_id.toString();
+	}
+	//call.initialize();
+	//call.insert();
+	//call.applyTemplate("k.tamu.software.tamu.edu");
+	
+	var newCall = new global.KioskUtils();
+	return createCallRecord();
+	
+	//gs.addInfoMessage("Call " + call.number + " created");
+	
+	gs.setRedirect('https://tamuplay.service-now.com/x_tamu2_serv_desk_kiosk.do?sysparm_stack=x_tamu2_serv_desk_kiosk_list.do&sys_id=-1&sysparm_view=Public_3&nav_to.do?uri=');
+   
+}
+
+
+
+/*************************/
+UI Action - submit to call
+Updated by - Nathan Lee
+/*************************/
+	gs.addInfoMessage("Submit button pressed");
+	//doesn't look like I can use Glide objects in Client Scripts. I either need to find a workaround or not use client scripts, which means it may be harder to perform the call creation on submit
+	var call = new GlideRecord("new_call");
+	var user = new GlideRecord("sys_user");
+	gs.addInfoMessage("CP1");
+	var problem = selectedProblem();
+	gs.addInfoMessage("CP2");
+	var customer;
+	call.u_service = "436845336fc0f1000798122cbb3ee402"; //Service = HDC Walk-in Services (TAMU)
+	call.u_category = "a6c654be6fc2820049a54e8f1e3ee4a6"; //Classification = Computer Services - Status/Inquiry (Walk-In)
+	call.contact_type = "Walk-in"; //Walk-in
+	gs.addInfoMessage("CP3");
+	if (current.u_kiosk_has_user) {
+		gs.addInfoMessage("Has UIN/NetID");
+		customer = current.u_kiosk_uin_netid_name;
+		user.get("user_name", customer);
+		call.description = customer;
+		call.short_description = problem;
+	} else {
+		gs.addInfoMessage("Guest");
+		user.get('user_name', 'no_record');
+		gs.addInfoMessage("CP4");
+		var norecordID = user.sys_id.toString();
+		call.caller = norecordID;
+		gs.addInfoMessage("CP5");
+		customer = current.u_kiosk_first_name + " " + current.u_kiosk_last_name;
+		call.u_caller_name = customer;
+		call.description = customer;
+		call.short_description = problem;
+	}
+	call.insert();
+	gs.addInfoMessage("Call " + call.number + " created");
+	action.setRedirectURL(call);
+	/*var call = new GlideRecord("new_call");
+	var user = new GlideRecord("sys_user");
+	var desc = current.u_kiosk_first_name + " " + current.u_kiosk_last_name + "\n";
+	var problem = current.u_kiosk_problem;
+
+	//Call creation for a customer who does not have or does not know his or her UIN
+	if (current.guest_user) {
+		call.caller = '4196a83f6fd92100b5919e0cbb3ee4e4'; //Joe Aggie
+		//call.caller = user.get(
+	} else { //Call creation for a customer who does have a UIN/NetID
+		call.caller = current.u_uin_netid;	
+	}
+
+	call.u_service = "436845336fc0f1000798122cbb3ee402"; //Service = HDC Walk-in Services (TAMU)
+	call.u_category = "a6c654be6fc2820049a54e8f1e3ee4a6"; //Classification = Computer Services - Status/Inquiry (Walk-In)
+	//call.call_type = "Help Request"; //Help Request
+	call.contact_type = "Walk-in"; //Walk-in
+	call.short_description = selectedProblem();
+	call.description = desc;
+
+	call.insert();
+
+	gs.addInfoMessage("Call " + call.number + " created");
+	action.setRedirectURL(call);
+*/
+	function selectedProblem() {
+		if      (current.u_kiosk_problem == "u_kiosk_software")      return "Software";
+		else if (current.u_kiosk_problem == "u_kiosk_password")      return "Password Reset";
+		else if (current.u_kiosk_problem == "u_kiosk_os_install")    return "Bootcamp/OS Install";
+		else if (current.u_kiosk_problem == "u_kiosk_engr")          return "Engineering/BYOD";
+		else if (current.u_kiosk_problem == "u_kiosk_wireless")      return "Wireless";
+		else if (current.u_kiosk_problem == "u_kiosk_dorm_net")      return "Dorm Networking";
+		else if (current.u_kiosk_problem == "u_kiosk_other_net")     return "Other Networking";
+		else if (current.u_kiosk_problem == "u_kiosk_virus")         return "Virus/Spyware";
+		else if (current.u_kiosk_problem == "u_kiosk_boot")          return "Computer Bootup Issues";
+		else if (current.u_kiosk_problem == "u_kiosk_slow_pc")       return "Slow or Unresponsive PC";
+		else if (current.u_kiosk_problem == "u_kiosk_hardware")      return "Hardware Issue";
+		else if (current.u_kiosk_problem == "u_kiosk_cable")         return "Cable TV/Philo";
+		else if (current.u_kiosk_problem == "u_kiosk_ecampus")       return "eCampus/Classwork";
+		else if (current.u_kiosk_problem == "u_kiosk_other_general") return "Other"; 
+		else return "Other";
+	}
