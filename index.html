@@ -15,17 +15,20 @@
 
     <div class="intro">
 		<h1 id="service-desk-name">{{servicedeskname}}</label><br>
-		<h4 id="welcome">{{welcome}}</label>
+      <h4 id="welcome">{{welcome}}</label>
     </div>
     
     <hr></hr>
 
 	<form id="form" name="form" novalidate>
 		
+		<div>
 		<label>Do you have a UIN/NetID?</label>
 		<input type="checkbox" name="chknetid" checked='checked' id="chknetid"/>
 		<br>
+		</div>
 			
+		<div>	
 		<label>UIN</label>
 		<input type="text" name="uin" placeholder="111001111"
 			ng-model="user.uin" ng-required="true" ng-minlength="9"
@@ -34,7 +37,9 @@
 				Please enter your UIN.
 			</p>
 		<br>
+		</div>
 			
+		<div>	
 		<label>NetID</label> 
 		<input type="text" name="netid" placeholder="your_netid"
 			ng-model="user.netid" ng-required="true" ng-minlength="3"
@@ -43,35 +48,45 @@
 				Please enter your NetID.
 			</p>
 		<br>
-			
+		</div>
+		
+		<div>	
 		<label>First name</label>
 		<input type="text" name="firstname" placeholder="Joe" 
 			ng-model="user.firstname" ng-required="true"><br>
 			<p class="error" ng-show="form.firstname.$invalid && form.firstname.$touched">
 				Please enter your first name.
 			</p>
-				
+		</div>
+		
+		<div>		
 		<label>Last name</label>
 		<input type="text" name="lastname" placeholder="Aggie" 
 			ng-model="user.lastname" ng-required="true"><br>
 			<p class="error" ng-show="form.lastname.$invalid && form.lastname.$touched">
 				Please enter your last name.
 			</p>
-				
+		</div>
+		
+		<div>		
 		<label>Phone number</label>
 		<input type="tel" name="phone" 
 			placeholder="979.845.8300" ng-model="user.phone"><br>
 			<p class="error" ng-show="form.phone.$invalid && form.email.$touched">
 				Please enter a valid phone number.
 			</p>
-      	
+      	</div>
+		
+		<div>
 		<label>Email address</label> 
 		<input type="email" name="email" 
 			placeholder="your_netid@tamu.edu" ng-model="user.email"><br>
 			<p class="error" ng-show="form.email.$invalid && form.email.$touched">
 				Please enter a valid email address.
 			</p>
-				
+		</div>
+
+		<div>
 		<label>What can we help you with?</label> 
 		<select name="service" ng-model="user.service" 
 			ng-required="true">
@@ -93,7 +108,9 @@
 			<p class="error" ng-show="form.service.$invalid && form.service.$touched">
 				Please select the service that you need assistance with.
 			</p><br>
+		</div>
 
+		<div>
 		<button type="button" name="submit" value="submit" onclick="createCallRecord()">Sign In</button>
 			<p id="submit-error" class="error" ng-show=
 				"(form.uin.$invalid && form.uin.$touched) || 
@@ -102,6 +119,7 @@
 				(form.lastname.$invalid && form.lastname.$touched)">
 				Please fill out all required forms.
 			</p>
+		</div>
 	</form>
 	</section>
 </div>
