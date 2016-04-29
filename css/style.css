@@ -42,10 +42,14 @@ h4 {
 
 input {
     width: 100%;
-    padding: 12px 20px;
+    padding: 12px 10px;
     margin: 8px 0;
     border: none;
     border-bottom: 2px solid black;
+}
+
+.signin div {
+	padding: 17px;
 }
 
 .error {
