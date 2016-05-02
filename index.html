@@ -20,49 +20,52 @@
     
     <hr></hr>
 
-	<form id="form" name="form" novalidate>
+	<form id="form" name="form" novalidate="true">
 		
 		<div>
 		<label>Do you have a UIN/NetID?</label>
-		<input type="checkbox" name="chknetid" checked='checked' id="chknetid"/>
+		<input type="checkbox" name="chknetid" id="chknetid" 
+		ng-model="user.checked"/>
 		<br>
 		</div>
 			
-		<div>	
+		<div ng-show="user.checked">	
 		<label>UIN</label>
 		<input type="text" name="uin" placeholder="111001111"
-			ng-model="user.uin" ng-required="true" ng-minlength="9"
-			ng-maxlength="9"><br>
+			ng-model="user.uin" 
+			ng-required="user.checked" 
+			ng-minlength="9"
+			ng-maxlength="9">
 			<p class="error" ng-show="form.uin.$invalid && form.uin.$touched">
-				Please enter your UIN.
+				Please enter a valid UIN.
 			</p>
-		<br>
 		</div>
 			
-		<div>	
+		<div ng-show="user.checked">	
 		<label>NetID</label> 
 		<input type="text" name="netid" placeholder="your_netid"
-			ng-model="user.netid" ng-required="true" ng-minlength="3"
-			ng-maxlength="20"><br>
+			ng-model="user.netid" 
+			ng-required="user.checked" 
+			ng-minlength="3"
+			ng-maxlength="20">
 			<p class="error" ng-show="form.netid.$invalid && form.netid.$touched">
-				Please enter your NetID.
+				Please enter a valid NetID.
 			</p>
-		<br>
 		</div>
 		
-		<div>	
+		<div ng-hide="user.checked">	
 		<label>First name</label>
 		<input type="text" name="firstname" placeholder="Joe" 
-			ng-model="user.firstname" ng-required="true"><br>
+			ng-model="user.firstname" ng-required="!user.checked">
 			<p class="error" ng-show="form.firstname.$invalid && form.firstname.$touched">
 				Please enter your first name.
 			</p>
 		</div>
 		
-		<div>		
+		<div ng-hide="user.checked">		
 		<label>Last name</label>
 		<input type="text" name="lastname" placeholder="Aggie" 
-			ng-model="user.lastname" ng-required="true"><br>
+			ng-model="user.lastname" ng-required="!user.checked">
 			<p class="error" ng-show="form.lastname.$invalid && form.lastname.$touched">
 				Please enter your last name.
 			</p>
@@ -71,7 +74,7 @@
 		<div>		
 		<label>Phone number</label>
 		<input type="tel" name="phone" 
-			placeholder="979.845.8300" ng-model="user.phone"><br>
+			placeholder="979.845.8300" ng-model="user.phone">
 			<p class="error" ng-show="form.phone.$invalid && form.email.$touched">
 				Please enter a valid phone number.
 			</p>
@@ -80,7 +83,7 @@
 		<div>
 		<label>Email address</label> 
 		<input type="email" name="email" 
-			placeholder="your_netid@tamu.edu" ng-model="user.email"><br>
+			placeholder="your_netid@tamu.edu" ng-model="user.email">
 			<p class="error" ng-show="form.email.$invalid && form.email.$touched">
 				Please enter a valid email address.
 			</p>
@@ -88,7 +91,7 @@
 
 		<div>
 		<label>What can we help you with?</label> 
-		<select name="service" ng-model="user.service" 
+		<select id="service" name="service" ng-model="user.service" 
 			ng-required="true">
 			<option value="Software">Software</option>
 			<option value="Password Reset">Password reset</option>
@@ -107,18 +110,13 @@
 		</select>
 			<p class="error" ng-show="form.service.$invalid && form.service.$touched">
 				Please select the service that you need assistance with.
-			</p><br>
-		</div>
-
-		<div>
-		<button type="button" name="submit" value="submit" onclick="createCallRecord()">Sign In</button>
-			<p id="submit-error" class="error" ng-show=
-				"(form.uin.$invalid && form.uin.$touched) || 
-				(form.netid.$invalid && form.netid.$touched) || 
-				(form.firstname.$invalid && form.firstname.$touched) || 
-				(form.lastname.$invalid && form.lastname.$touched)">
-				Please fill out all required forms.
 			</p>
+		</div>
+		
+		<div id="submit-button" name="submit-button"
+			ng-model="submitbutton"
+			ng-show="showButton">
+		<button type="button" name="submit" value="submit" onclick="createCallRecord()">Sign In</button>
 		</div>
 	</form>
 	</section>
