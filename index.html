@@ -11,89 +11,114 @@
 </head>
 <body ng-controller="kiosk-controller">
 <div class="page">
-  <section class="signin">
+	<section class="signin">
 
     <div class="intro">
-      <h1 id="service-desk-name">{{servicedeskname}}</label><br>
+		<h1 id="service-desk-name">{{servicedeskname}}</label><br>
       <h4 id="welcome">{{welcome}}</label>
     </div>
     
     <hr></hr>
 
-		<form id="form" name="form" onsubmit="createCallRecord()" novalidate>
+	<form id="form" name="form" novalidate="true">
 		
-			<label>Do you have a UIN/NetID?</label>
-			<input type="checkbox" name="chknetid" checked='checked' id="chknetid"/>
-			<br>
+		<div>
+		<label>Do you have a UIN/NetID?</label>
+		<input type="checkbox" name="chknetid" id="chknetid" 
+		ng-model="user.checked"/>
+		<br>
+		</div>
 			
-			<label>UIN</label>
-			<input type="text" name="uin" placeholder="111001111"
-				ng-model="user.uin" ng-required="true" ng-minlength="9"
-				ng-maxlength="9"><br>
-				<p class="error" ng-show="form.uin.$invalid && form.uin.$touched">
-					Please enter your UIN.
-				</p>
+		<div ng-show="user.checked">	
+		<label>UIN</label>
+		<input type="text" name="uin" placeholder="111001111"
+			ng-model="user.uin" 
+			ng-required="user.checked" 
+			ng-minlength="9"
+			ng-maxlength="9">
+			<p class="error" ng-show="form.uin.$invalid && form.uin.$touched">
+				Please enter a valid UIN.
+			</p>
+		</div>
 			
-			<label>NetID</label> 
-			<input type="text" name="netid" placeholder="your_netid"
-				ng-model="user.netid" ng-required="true" ng-minlength="3"
-				ng-maxlength="20"><br>
-				<p class="error" ng-show="form.netid.$invalid && form.netid.$touched">
-					Please enter your NetID.
-				</p>
-			
-      <label>First name</label>
-      <input type="text" name="firstname" placeholder="Joe" 
-      	ng-model="user.firstname" ng-required="true"><br>
-      	<p class="error" ng-show="form.firstname.$invalid && form.firstname.$touched">
-					Please enter your first name.
-				</p>
-				
-      <label>Last name</label>
-      <input type="text" name="lastname" placeholder="Aggie" 
-      	ng-model="user.lastname" ng-required="true"><br>
-      	<p class="error" ng-show="form.lastname.$invalid && form.lastname.$touched">
-					Please enter your last name.
-				</p>
-				
-      <label>Phone number</label>
-      <input type="tel" name="phone" 
-      	placeholder="979.845.8300" ng-model="user.phone"><br>
-      	<p class="error" ng-show="form.phone.$invalid && form.email.$touched">
-      		Please enter a valid phone number.
-      	</p>
-      	
-      <label>Email address</label> 
-      <input type="email" name="email" 
-      	placeholder="your_netid@tamu.edu" ng-model="user.email"><br>
-      	<p class="error" ng-show="form.email.$invalid && form.email.$touched">
-					Please enter a valid email address.
-				</p>
-				
-      <label>What can we help you with?</label> 
-      <select name="service" ng-model="user.service" 
-      	ng-required="true">
-  			<option value="Software">Software</option>
-				<option value="Password Reset">Password reset</option>
-				<option value="Bootcamp/OS Install">Bootcamp/OS Install</option>
-				<option value="Engineering/BYOD">Engineering/BYOD</option>
-				<option value="Wireless">Wireless</option>
-				<option value="Dorm Networking">Dorm Networking</option>
-				<option value="Other Networking">Other Networking</option>
-				<option value="Virus/Malware">Virus/Malware</option>
-				<option value="Computer Bootup Issues">Computer Bootup Issues</option>
-				<option value="Slow or Unresponsive Computer">Slow or Unresponsive Computer</option>
-				<option value="Hardware Issue">Hardware Issue</option>
-				<option value="Cable TV">Cable TV</option>
-				<option value="Philo TV">Philo TV</option>
-				<option value="eCampus/Classwork">eCampus/Classwork</option>		
-			</select>
-				<p class="error" ng-show="form.service.$invalid && form.service.$touched">
-					Please select the service that you need assistance with.
-				</p>
+		<div ng-show="user.checked">	
+		<label>NetID</label> 
+		<input type="text" name="netid" placeholder="your_netid"
+			ng-model="user.netid" 
+			ng-required="user.checked" 
+			ng-minlength="3"
+			ng-maxlength="20">
+			<p class="error" ng-show="form.netid.$invalid && form.netid.$touched">
+				Please enter a valid NetID.
+			</p>
+		</div>
+		
+		<div ng-hide="user.checked">	
+		<label>First name</label>
+		<input type="text" name="firstname" placeholder="Joe" 
+			ng-model="user.firstname" ng-required="!user.checked">
+			<p class="error" ng-show="form.firstname.$invalid && form.firstname.$touched">
+				Please enter your first name.
+			</p>
+		</div>
+		
+		<div ng-hide="user.checked">		
+		<label>Last name</label>
+		<input type="text" name="lastname" placeholder="Aggie" 
+			ng-model="user.lastname" ng-required="!user.checked">
+			<p class="error" ng-show="form.lastname.$invalid && form.lastname.$touched">
+				Please enter your last name.
+			</p>
+		</div>
+		
+		<div>		
+		<label>Phone number</label>
+		<input type="tel" name="phone" 
+			placeholder="979.845.8300" ng-model="user.phone">
+			<p class="error" ng-show="form.phone.$invalid && form.email.$touched">
+				Please enter a valid phone number.
+			</p>
+      	</div>
+		
+		<div>
+		<label>Email address</label> 
+		<input type="email" name="email" 
+			placeholder="your_netid@tamu.edu" ng-model="user.email">
+			<p class="error" ng-show="form.email.$invalid && form.email.$touched">
+				Please enter a valid email address.
+			</p>
+		</div>
 
-    <button type="submit" class="btn">Sign In</button>
-  </form>
+		<div>
+		<label>What can we help you with?</label> 
+		<select id="service" name="service" ng-model="user.service" 
+			ng-required="true">
+			<option value="Software">Software</option>
+			<option value="Password Reset">Password reset</option>
+			<option value="Bootcamp/OS Install">Bootcamp/OS Install</option>
+			<option value="Engineering/BYOD">Engineering/BYOD</option>
+			<option value="Wireless">Wireless</option>
+			<option value="Dorm Networking">Dorm Networking</option>
+			<option value="Other Networking">Other Networking</option>
+			<option value="Virus/Malware">Virus/Malware</option>
+			<option value="Computer Bootup Issues">Computer Bootup Issues</option>
+			<option value="Slow or Unresponsive Computer">Slow or Unresponsive Computer</option>
+			<option value="Hardware Issue">Hardware Issue</option>
+			<option value="Cable TV">Cable TV</option>
+			<option value="Philo TV">Philo TV</option>
+			<option value="eCampus/Classwork">eCampus/Classwork</option>		
+		</select>
+			<p class="error" ng-show="form.service.$invalid && form.service.$touched">
+				Please select the service that you need assistance with.
+			</p>
+		</div>
+		
+		<div id="submit-button" name="submit-button"
+			ng-model="submitbutton"
+			ng-show="showButton">
+		<button type="button" name="submit" value="submit" onclick="createCallRecord()">Sign In</button>
+		</div>
+	</form>
 	</section>
 </div>
 </body>
